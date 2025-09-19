@@ -6,4 +6,4 @@ tasks_bp = Blueprint('tasks', __name__)
 def get_all_tasks_route():
     from models.tasks import get_all_tasks
     tasks = get_all_tasks()
-    return {"tasks": tasks}, 200
+    return tasks, 200
