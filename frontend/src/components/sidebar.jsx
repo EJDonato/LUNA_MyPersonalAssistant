@@ -28,10 +28,10 @@ function Sidebar() {
         }
     }
 
-    return <div className="h-[calc(100vh-40px)] w-90 bg-gray-100 rounded-4xl flex m-5 flex-col shadow-[0_8px_16px_rgba(0,0,0,0.12)]">
+    return <div className="h-[calc(100vh-40px)] w-90 rounded-4xl flex m-5 flex-col shadow-xl">
         
         {/* Collapse Button */}
-        <button className="flex w-12 h-12 ml-auto mt-[20px] mr-[20px] rounded-3xl justify-center items-center hover:bg-gray-200 transition-colors duration-400 ease-in-out">
+        <button className="flex w-12 h-12 ml-auto mt-[20px] mr-[20px] rounded-3xl justify-center items-center hover:shadow-lg transition-shadow duration-400 ease-in-out">
             <img src={chevron} alt="chevron" className="w-6 h-6"/>
         </button>   
 
@@ -41,16 +41,10 @@ function Sidebar() {
             <button
                 key={item}
                 onClick={() => handleClick(item)}
-                className={`w-[80%] p-3 rounded-3xl relative transition-colors hover:text-black ${
-                active === item ? "text-black" : "text-gray-500"
-                }`}
-            >
+                className={`w-[80%] p-3 rounded-3xl relative transition-color ease-in-out duration-300 hover:text-black ${
+                active === item ? "text-black shadow-lg" : "text-gray-500"
+                }`}>
                 {item}
-                <span
-                className={`absolute bottom-0 left-0 w-full h-[3px] bg-black rounded-full 
-                origin-center transform transition-transform duration-300 ease-in-out
-                ${active === item ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"}`}
-                />
             </button>
             ))}
         </div>
