@@ -5,14 +5,16 @@ function Tasks() {
     const tableHeaders = ["Task Title", "Description", "Due Date", "Status"];
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true);
-    
+    const statusCycles = ["Pending", "Ongoing", "Completed"];
+
     useEffect(() => {
         // Fetch tasks from backend API
         const fetchTasks = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:5000/api/supabase/get_all_tasks");
+                const response = await fetch("http://127.0.0.1:8000/api/supabase/get_all_tasks");
                 const data = await response.json();
-                setTasks(data)
+                console.log("Fetched tasks:", data);
+                setTasks(data[0]); 
             } catch (error) {
                 console.error("Error fetching tasks:", error);
             } finally {
@@ -21,6 +23,10 @@ function Tasks() {
         }
         fetchTasks();
     }, []);
+
+    const handleStatusClick = async (taskId, currentStatus) => {
+        
+    }
 
     return (
         <div className="flex flex-col items-center h-[calc(100vh-40px)] flex-1 m-5 ml-0 rounded-2xl shadow-lg">
@@ -51,7 +57,7 @@ function Tasks() {
                                                                                                             month: "long",
                                                                                                             day: "numeric"
                                                                                                         })}</td>
-                                    <td className="px-6 py-4 border-b border-gray-200 text-center">{task.status}</td>
+                                    <td className="px-6 py-4 border-b border-gray-200 text-center"><button onClick={() => handleStatusClick(task.id, task.status)}>{task.status}</button></td>
                                 </tr>
                             ))
                         )}

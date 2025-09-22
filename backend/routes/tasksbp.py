@@ -1,9 +1,10 @@
-from flask import Blueprint
+from fastapi import APIRouter 
 
-tasks_bp = Blueprint('tasks', __name__)
+tasks_bp = APIRouter(tags=["tasks"])
 
-@tasks_bp.route('/api/supabase/get_all_tasks', methods=['GET'])
+@tasks_bp.get('/api/supabase/get_all_tasks')
 def get_all_tasks_route():
     from models.tasks import get_all_tasks
     tasks = get_all_tasks()
+    print("Retrieved tasks:", tasks)
     return tasks, 200
