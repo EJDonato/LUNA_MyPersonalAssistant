@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import chevron from "../assets/chevron.png";
 
-function Sidebar() {
+function Sidebar({ isCollapsed, setIsCollapsed }) {
     const [active, setActive] = useState("Dashboard");
     const menuItems = ["Dashboard", "Tasks", "Calendar", "Settings"];
     const navigate = useNavigate();
@@ -29,27 +29,47 @@ function Sidebar() {
     }
 
     return (
-        <div className="h-[calc(100vh-40px)] w-90 rounded-4xl flex m-5 flex-col shadow-xl">
+        <>
+            {isCollapsed && (
+                <div className="absolute top-5 left-5 z-50">
+                    <button 
+                        className="flex w-12 h-12 rounded-3xl justify-center items-center hover:shadow-[0_4px_4px_rgba(0,0,0,0.5)] transition-shadow duration-400 ease-in-out"
+                        onClick={() => setIsCollapsed(false)}
+                        >
+                        <img src={chevron} alt="chevron" className="w-6 h-6"/>
+                    </button>   
+                </div>
+            )}
             
-            {/* Collapse Button */}
-            <button className="flex w-12 h-12 ml-auto mt-[20px] mr-[20px] rounded-3xl justify-center items-center hover:shadow-lg transition-shadow duration-400 ease-in-out">
-                <img src={chevron} alt="chevron" className="w-6 h-6"/>
-            </button>   
 
-            {/* Menu Items */}
-            <div className="flex flex-col w-full justify-center items-center gap-10 text-3xl mt-40">
-                {menuItems.map((item) => (
-                <button
-                    key={item}
-                    onClick={() => handleClick(item)}
-                    className={`w-[80%] p-3 rounded-3xl relative transition-color ease-in-out duration-300 hover:text-black ${
-                    active === item ? "text-black shadow-lg" : "text-gray-500"
-                    }`}>
-                    {item}
-                </button>
-                ))}
+            <div className={`h-[calc(100vh-40px)] w-90 rounded-4xl flex m-5 flex-col shadow-xl
+                ${isCollapsed ? "transition-transform duration-300 ease-in-out -translate-x-[105%] absolute top-0 left-0 m-0 p-0" : "transition-transform duration-300 ease-in-out translate-x-0 m-5"}`
+            }>
+                
+                {/* Collapse Button */}
+                <button 
+                    className="flex w-12 h-12 ml-auto mt-[20px] mr-[20px] rounded-3xl justify-center items-center hover:shadow-[0_4px_4px_rgba(0,0,0,0.5)] transition-shadow duration-400 ease-in-out"
+                    onClick={() => setIsCollapsed(true)}
+                    >
+                    <img src={chevron} alt="chevron" className="w-6 h-6"/>
+                </button>   
+
+                {/* Menu Items */}
+                <div className="flex flex-col w-full justify-center items-center gap-10 text-3xl mt-40">
+                    {menuItems.map((item) => (
+                    <button
+                        key={item}
+                        onClick={() => handleClick(item)}
+                        className={`w-[80%] p-3 rounded-3xl relative transition-color ease-in-out duration-300 hover:text-black ${
+                        active === item ? "text-black shadow-lg" : "text-gray-500"
+                        }`}>
+                        {item}
+                    </button>
+                    ))}
+                </div>
             </div>
-        </div>
+
+        </>
     )
 
 }
